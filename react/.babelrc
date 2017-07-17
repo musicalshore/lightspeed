@@ -1,0 +1,38 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["last 2 versions", "last 2 ie versions", "last 3 safari versions"]
+      },
+      "debug": false
+    }],
+    "react",
+    "bluebird"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "jsx-control-statements"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        ["react-css-modules", {
+         "filetypes": {
+            ".scss": "postcss-scss"
+          },
+          "context": "./src",
+          "exclude": "node_modules",
+          "generateScopedName": "[local]"
+        }]
+      ]
+    },
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
+}
