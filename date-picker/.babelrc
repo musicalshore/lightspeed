@@ -12,17 +12,13 @@
   ],
   "plugins": [
     "transform-class-properties",
-    "transform-object-rest-spread",
-    "jsx-control-statements"
+    "transform-object-rest-spread"
   ],
   "env": {
     "test": {
       "plugins": [
         "transform-es2015-modules-commonjs",
         ["react-css-modules", {
-         "filetypes": {
-            ".scss": "postcss-scss"
-          },
           "context": "./src",
           "exclude": "node_modules",
           "generateScopedName": "[local]"

@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 
 const webpack = require('webpack')
-const config = require('./webpack/webpack.config.development.js')
+const config = require('./webpack/webpack.config.js')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const DIST_DIR = path.join(__dirname, 'dist')
 const HTML_FILE = path.join(DIST_DIR, 'index.html')
@@ -20,19 +20,19 @@ if (isDevelopment) {
   }))
 
   app.use(require('webpack-hot-middleware')(compiler, {
-    path: config.output.publicPath + '__what',
+    path: config.output.publicPath + '__webpack_hmr',
     heartbeat: 3 * 1000
   }))
 
   app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'src', 'templates', 'index.ejs'))
+    res.sendFile(path.join(__dirname, 'src', 'templates', 'index.tpl.html'))
   })
 } else {
   app.use(express.static(DIST_DIR))
 
   app.get('*', (req, res) => res.sendFile(HTML_FILE))
 }
-const server = app.listen(process.env.PORT || 3333, '0.0.0.0', (err) => {
+const server = app.listen(process.env.PORT || 3000, '0.0.0.0', (err) => {
   if (err) {
     console.log(err)
     return

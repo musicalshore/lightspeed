@@ -16,9 +16,6 @@ module.exports = [
         options: {
           plugins: [
             ['react-css-modules', {
-              filetypes: {
-                '.scss': 'postcss-scss'
-              },
               context,
               exclude: 'node_modules',
               webpackHotModuleReloading: true
@@ -26,23 +23,23 @@ module.exports = [
           ]
         }
       }
-      // {
-      //   loader: 'eslint-loader'
-      // }
     ]
   },
   {
     test: /\.css$/,
-    // exclude: /rc-slider/,
     use: ((env) => {
       if (env === 'production') {
         return ExtractTextPlugin.extract({
           use: [{
             loader: 'css-loader',
             options: {
-              modules: false,
+              modules: true,
+              importLoaders: 1,
               localIdentName
             }
+          },
+          {
+            loader: 'postcss-loader'
           }],
           fallback: 'style-loader'
         })
@@ -52,61 +49,14 @@ module.exports = [
         }, {
           loader: 'css-loader',
           options: {
-            modules: false,
+            modules: true,
+            importLoaders: 1,
             localIdentName
           }
+        },
+        {
+          loader: 'postcss-loader'
         }]
-      }
-    })(process.env.NODE_ENV)
-  },
-  {
-    test: /\.scss$/,
-    // exclude: /global.scss/,
-    use: ((env) => {
-      if (env === 'production') {
-        return ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName
-            }
-          },
-          {
-            loader: 'postcss-loader'
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [context]
-            }
-          }],
-          fallback: 'style-loader'
-        })
-      } else {
-        return [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName
-            }
-          },
-          {
-            loader: 'postcss-loader'
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [context]
-            }
-          }
-        ]
       }
     })(process.env.NODE_ENV)
   },
@@ -117,7 +67,6 @@ module.exports = [
         loader: 'file-loader',
         options: {
           outputPath: path.join('assets', 'images', '/'),
-          // publicPath: 'assets/images/',
           name: '[name]--[hash:base64:5].[ext]'
         }
       }

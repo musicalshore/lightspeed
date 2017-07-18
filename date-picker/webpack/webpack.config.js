@@ -1,9 +1,8 @@
-var path = require('path')
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var StyleLintPlugin = require('stylelint-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   // devtool: 'source-map',
@@ -22,7 +21,7 @@ module.exports = {
     main: [
       'babel-polyfill',
       'react-hot-loader/patch',
-      'webpack-hot-middleware/client?http://0.0.0.0:3333&path=/__what&timeout=6000&reload=true',
+      'webpack-hot-middleware/client?http://0.0.0.0:3000&path=/__webpack_hmr&timeout=6000&reload=true',
       'index.js'
     ]
   },
@@ -42,22 +41,9 @@ module.exports = {
       'environment': '\'development\'',
       NODE_ENV: JSON.stringify('development')
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: ['vendor'],
-    //   minChunks: function (module) {
-    //     return module.context && module.context.indexOf('node_modules') !== -1
-    //   }
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: ['manifest']
-    // }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({template: path.join(__dirname, '..', 'src', 'templates', 'index.ejs')}),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
-    })
+    new HtmlWebpackPlugin({template: path.join(__dirname, '..', 'src', 'templates', 'index.tpl.html')})
   ],
   resolve: {
     modules: ['node_modules', 'src'],
